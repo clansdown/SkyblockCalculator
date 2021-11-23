@@ -1,0 +1,268 @@
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skyblock Weapons & Armor Calculator</title>
+    <style>
+      DIV#sire DIV.ENTRY {
+          border: 2px solid #99f;
+      }
+      DIV#dam DIV.ENTRY {
+          border: 2px solid #fdd;
+      }
+      DIV.parent H2 {
+          margin-bottom: 6px;
+      }
+      DIV.entry {
+          display: inline-block;
+          border: 1px solid #000;
+          width: 10em;
+          padding: 4px;
+      }
+      DIV.entry P {
+          text-align: center;
+          margin: 0 auto;
+          padding: 4px;
+      }
+      DIV.entry INPUT {
+          width: 5em;
+      }
+      CENTER.summary {
+          margin: 2em;
+          padding: 1em;
+          border: 1px solid #ccc;
+      }
+
+
+      .dropbtn {
+  background-color: #04AA6D;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.dropbtn:hover, .dropbtn:focus {
+  background-color: #3e8e41;
+}
+
+#myInput {
+  box-sizing: border-box;
+  background-image: url('searchicon.png');
+  background-position: 14px 12px;
+  background-repeat: no-repeat;
+  font-size: 16px;
+  padding: 14px 20px 12px 45px;
+  border: none;
+  border-bottom: 1px solid #ddd;
+}
+
+#myInput:focus {outline: 3px solid #ddd;}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f6f6f6;
+  min-width: 230px;
+  overflow: auto;
+  border: 1px solid #ddd;
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown a:hover {background-color: #ddd;}
+
+.show {display: block;}
+    </style>
+
+    
+    <script type="text/javascript" src="jquery-3.4.1.min.js"></script>
+
+    <!-- The Data -->
+    <script>
+      item={"helmet" : "#none", "chestplate" : "#none", "legging" : "#none", "boot" : "#none"}
+      helmets = {
+          "#none": {"def":0,"hp":0,"crit":0,"cc":0,"int":0},
+          "#lapis" : {"def":25},
+          "#unstabledragon": {"def":110,"hp":70,"crit":15,"cc":5,"int":25}
+      };
+      chestplates = {
+          "#none": {},
+          "#lapis" : {"def":40},
+          "#unstabledragon": {"def":160,"hp":120,"crit":15,"cc":5}
+      };
+      leggings = {
+          "#none": {},
+          "#lapis" : {"def":35}
+      };
+      boots = {
+          "#none": {},
+          "#lapis" : {"def":20}
+      };
+      fullset = {
+          "#lapis": {"hp":60},
+      };
+      
+    </script>
+
+
+<script>
+/* When the user clicks on the button,
+toggle between hiding and showing the dropdown content */
+function myFunction(itemName) {
+    //document.getElementById(itemName).classList.toggle("show");
+    $('#'+itemName + 'Dropdown').show();
+    $('#' + itemName + 'Dropdown').children('a').each(function (index, el) {
+        const name = $(this).text();
+        const href = $(this).attr('href');
+        $(this).click(function () { selectItem(itemName, name, href); });
+    });
+}
+
+function filterFunction(itemName, inputName) {
+    var input, filter, ul, li, a, i;
+    input = document.getElementById(inputName);
+    filter = input.value.toUpperCase();
+    div = document.getElementById(itemName);
+    div = $('#' + itemName);
+    div.children('a').each(function (index) {
+        txtValue = $(this).text();
+        if(txtValue.toUpperCase().indexOf(filter) > -1) {
+            $(this).show();
+        } else {
+            $(this).hide();
+        }
+    });
+}
+
+  function selectItem(itemName, name, href) {
+      $('#'+itemName+'Dropdown').hide();
+      if(name == "None")
+          $('#'+itemName + 'DropdownButton').text("No " + itemName);
+      else
+          $('#'+itemName +'DropdownButton').text(name + " " + itemName);
+      item[itemName] = href;
+      calculateStats();
+  }
+
+  function n(x) {
+      if(isNaN(x))
+          return 0;
+      return x;
+  }
+  
+  function calculateStats() {
+      var helmet = helmets[item["helmet"]];
+      var chest = chestplates[item["chestplate"]];
+      var leg = leggings[item["legging"]];
+      var bt = boots[item["boot"]];
+      var fs;
+      if(item["helmet"] == item["chestplate"] && item["chestplate"] == item["legging"] && item["legging"] == item["boot"]) {
+          fs = fullset[item["helmet"]];
+          if(fs === null || typeof fs === 'undefined')
+              fs = {"hp": 0, "def": 0, "crit":0, "cc":0};
+      } else {
+          fs = {"hp": 0, "def": 0, "crit":0, "cc":0};
+      }
+          
+
+      var hp = 100 + n(helmet.hp) + n(chest.hp) + n(leg.hp) + n(bt.hp) + n(fs.hp);
+      $('#health').text(hp);
+      var def = n(helmet.def) + n(chest.def) + n(leg.def) + n(bt.def) + n(fs.def);
+      $('#defense').text(def);
+      var ehp = hp * (1 + (def/100));
+      $('#ehp').text(ehp);
+      var str = n(helmet.str) + n(chest.str) + n(leg.str) + n(bt.str) + n(fs.str);
+      var crit = 50 + n(helmet.crit) + n(chest.crit) + n(leg.crit) + n(bt.crit) + n(fs.crit);
+      
+  }
+</script>
+    
+  </head>
+  <body>
+
+    <h1>Skyblock Weapons & Armor Calculator</h1>
+
+<h2>Weapon</h2>
+
+    
+<h2>Armor</h2>
+
+<div class="dropdown">
+  <button id="helmetDropdownButton" onclick="myFunction('helmet')" class="dropbtn">Helmet</button>
+  <div id="helmetDropdown" class="dropdown-content">
+    <input type="text" placeholder="Search.." id="chestInput" onkeyup="filterFunction('helmetDropdown','helmetInput')">
+    <a href="#none">None</a>
+    <a href="#lapis">Lapis</a>
+    <a href="#strongdragon">Strong Dragon</a>
+    <a href="#unstabledragon">Unstable Dragon</a>
+    <a href="#youngdragon">Young Dragon</a>
+  </div>
+</div>
+
+
+<div class="dropdown">
+  <button id="chestplateDropdownButton" onclick="myFunction('chestplate')" class="dropbtn">Chestplate</button>
+  <div id="chestplateDropdown" class="dropdown-content">
+    <input type="text" placeholder="Search.." id="chestInput" onkeyup="filterFunction('chestplateDropdown','chestplateInput')">
+    <a href="#none">None</a>
+    <a href="#lapis">Lapis</a>
+    <a href="#strongdragon">Strong Dragon</a>
+    <a href="#unstabledragon">Unstable Dragon</a>
+    <a href="#youngdragon">Young Dragon</a>
+  </div>
+</div>
+
+<div class="dropdown">
+  <button id="leggingDropdownButton" onclick="myFunction('legging')" class="dropbtn">Legging</button>
+  <div id="leggingDropdown" class="dropdown-content">
+    <input type="text" placeholder="Search.." id="leggingInput" onkeyup="filterFunction('leggingDropdown','leggingInput')">
+    <a href="#none">None</a>
+    <a href="#lapis">Lapis</a>
+    <a href="#strongdragon">Strong Dragon</a>
+    <a href="#unstabledragon">Unstable Dragon</a>
+    <a href="#youngdragon">Young Dragon</a>
+  </div>
+</div>
+
+<div class="dropdown">
+  <button id="bootDropdownButton" onclick="myFunction('boot')" class="dropbtn">Boot</button>
+  <div id="bootDropdown" class="dropdown-content">
+    <input type="text" placeholder="Search.." id="bootInput" onkeyup="filterFunction('bootDropdown','bootInput')">
+    <a href="#none">None</a>
+    <a href="#lapis">Lapis</a>
+    <a href="#strongdragon">Strong Dragon</a>
+    <a href="#unstabledragon">Unstable Dragon</a>
+    <a href="#youngdragon">Young Dragon</a>
+  </div>
+</div>
+
+      
+
+<hr>
+
+
+<h2>Stats</h2>
+
+<div class="stat">Health: <span id="health"></div>
+<div class="stat">Defense: <span id="defense"></div>
+
+<div class="stat">Effective HP: <span id="ehp"></div>
+
+<div class="stat">Damage per hit: <span id="damage"></div>
+     
+
+    
+  </body>
+</html>
