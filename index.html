@@ -2,6 +2,46 @@
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Skyblock Weapons & Armor Calculator</title>
+
+    <script type="text/javascript" src="jquery-3.4.1.min.js"></script>
+
+<!-- The Data -->
+<script>
+  item={"weapon": "#none", "helmet" : "#none", "chestplate" : "#none", "legging" : "#none", "boot" : "#none"}
+  weapons = {
+      "#none": {},
+      "#aote": {"dmg": 100, "str": 100},
+      "#aotd": {"dmg": 225, "str": 100},
+      "#fot": {"dmg": 160, str: 300}
+  };
+      helmets = {
+          "#none": {"def":0,"hp":0,"crit":0,"cc":0,"int":0},
+          "#lapis" : {"def":25},
+          "#unstabledragon": {"def":110,"hp":70,"crit":15,"cc":5,"int":25}
+      };
+      chestplates = {
+          "#none": {},
+          "#lapis" : {"def":40},
+          "#unstabledragon": {"def":160,"hp":120,"crit":15,"cc":5}
+      };
+      leggings = {
+          "#none": {},
+          "#lapis" : {"def":35},
+          "#unstabledragon": {"def":140,"hp":100,"crit":15,"cc":5}
+      };
+      boots = {
+          "#none": {},
+          "#lapis" : {"def":20},
+          "#unstabledragon": {"def":90,"hp":60,"crit":15,"cc":5}
+      };
+      fullset = {
+          "#lapis": {"hp":60},
+      };
+      
+</script>
+<!-- End Data -->
+
+    
     <style>
       DIV#sire DIV.ENTRY {
           border: 2px solid #99f;
@@ -87,34 +127,6 @@
     </style>
 
     
-    <script type="text/javascript" src="jquery-3.4.1.min.js"></script>
-
-    <!-- The Data -->
-    <script>
-      item={"helmet" : "#none", "chestplate" : "#none", "legging" : "#none", "boot" : "#none"}
-      helmets = {
-          "#none": {"def":0,"hp":0,"crit":0,"cc":0,"int":0},
-          "#lapis" : {"def":25},
-          "#unstabledragon": {"def":110,"hp":70,"crit":15,"cc":5,"int":25}
-      };
-      chestplates = {
-          "#none": {},
-          "#lapis" : {"def":40},
-          "#unstabledragon": {"def":160,"hp":120,"crit":15,"cc":5}
-      };
-      leggings = {
-          "#none": {},
-          "#lapis" : {"def":35}
-      };
-      boots = {
-          "#none": {},
-          "#lapis" : {"def":20}
-      };
-      fullset = {
-          "#lapis": {"hp":60},
-      };
-      
-    </script>
 
 
 <script>
@@ -163,10 +175,14 @@ function filterFunction(itemName, inputName) {
   }
   
   function calculateStats() {
-      var helmet = helmets[item["helmet"]];
-      var chest = chestplates[item["chestplate"]];
-      var leg = leggings[item["legging"]];
-      var bt = boots[item["boot"]];
+      // TODO: get this from the user
+      var combat_level = 1;
+      
+      var weapon = weapons[item["weapon"]] || {};
+      var helmet = helmets[item["helmet"]] || {};
+      var chest = chestplates[item["chestplate"]] || {};
+      var leg = leggings[item["legging"]] || {};
+      var bt = boots[item["boot"]] || {};
       var fs;
       if(item["helmet"] == item["chestplate"] && item["chestplate"] == item["legging"] && item["legging"] == item["boot"]) {
           fs = fullset[item["helmet"]];
@@ -182,10 +198,23 @@ function filterFunction(itemName, inputName) {
       var def = n(helmet.def) + n(chest.def) + n(leg.def) + n(bt.def) + n(fs.def);
       $('#defense').text(def);
       var ehp = hp * (1 + (def/100));
-      $('#ehp').text(ehp);
-      var str = n(helmet.str) + n(chest.str) + n(leg.str) + n(bt.str) + n(fs.str);
+      $('#ehp').text(Math.floor(ehp));
+
+      /* Calculate Damage */
+      var dmg = n(weapon.dmg);
+      var str = n(weapon.str) + n(helmet.str) + n(chest.str) + n(leg.str) + n(bt.str) + n(fs.str);
       var crit = 50 + n(helmet.crit) + n(chest.crit) + n(leg.crit) + n(bt.crit) + n(fs.crit);
+      var init_damage = (5+dmg)*(1 + (str/100));
+      var dmg_mult = 1 + (combat_level*.04);
+      var hit_damage = init_damage*dmg_mult;
+      var crit_damage = hit_damage*(1 + (crit/100));
+      $('#damage').text(Math.floor(hit_damage));
+      $('#critdamage').text(Math.floor(crit_damage));
       
+      var cc = 30 + 0.5*combat_level + n(helmet.cc) + n(chest.cc) + n(leg.cc) + n(bt.cc) + n(fs.cc);
+      if(cc > 100)
+          cc = 100;
+      $('#critchance').text(Math.floor(cc));
   }
 </script>
     
@@ -195,6 +224,17 @@ function filterFunction(itemName, inputName) {
     <h1>Skyblock Weapons & Armor Calculator</h1>
 
 <h2>Weapon</h2>
+
+<div class="dropdown">
+  <button id="weaponDropdownButton" onclick="myFunction('weapon')" class="dropbtn">Weapon</button>
+  <div id="weaponDropdown" class="dropdown-content">
+    <input type="text" placeholder="Search.." id="weaponInput" onkeyup="filterFunction('weaponDropdown','weaponInput')">
+    <a href="#none">None</a>
+    <a href="#aote">Aspect of the End</a>
+    <a href="#atod">Aspect of the Dragons</a>
+    <a href="#fot">Flower of Truth</a>
+  </div>
+</div>
 
     
 <h2>Armor</h2>
@@ -255,12 +295,17 @@ function filterFunction(itemName, inputName) {
 
 <h2>Stats</h2>
 
-<div class="stat">Health: <span id="health"></div>
-<div class="stat">Defense: <span id="defense"></div>
+<div class="stat">Health: <span id="health"></span></div>
+<div class="stat">Defense: <span id="defense"></span></div>
 
-<div class="stat">Effective HP: <span id="ehp"></div>
+<div class="stat">Effective HP: <span id="ehp"></span></div>
 
-<div class="stat">Damage per hit: <span id="damage"></div>
+<br>
+
+<div class="stat">Normal Damage: <span id="damage"></span></div>
+<div class="stat">Crit Chance: <span id="critchance"></span>%</div>
+<div class="stat">Crit Damage: <span id="critdamage"></span></div>
+
      
 
     
