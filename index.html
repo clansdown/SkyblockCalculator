@@ -11,28 +11,33 @@
   weapons = {
       "#none": {},
       "#aote": {"dmg": 100, "str": 100},
+	"#OrnateZombieSword": {"dmg": 110, "str": 60, "int": 50},
       "#aotd": {"dmg": 225, "str": 100},
       "#fot": {"dmg": 160, str: 300}
   };
       helmets = {
           "#none": {"def":0,"hp":0,"crit":0,"cc":0,"int":0},
           "#lapis" : {"def":25},
-          "#unstabledragon": {"def":110,"hp":70,"crit":15,"cc":5,"int":25}
+          "#unstabledragon": {"def":110,"hp":70,"crit":15,"cc":5,"int":25},
+	"#shadowassassin" : {"def":70, "hp":160, "crit":25, "str":25},
       };
       chestplates = {
           "#none": {},
           "#lapis" : {"def":40},
-          "#unstabledragon": {"def":160,"hp":120,"crit":15,"cc":5}
+          "#unstabledragon": {"def":160,"hp":120,"crit":15,"cc":5},
+	"#shadowassassin" : {"def":110, "hp":240, "crit":25, "str":25},
       };
       leggings = {
           "#none": {},
           "#lapis" : {"def":35},
-          "#unstabledragon": {"def":140,"hp":100,"crit":15,"cc":5}
+          "#unstabledragon": {"def":140,"hp":100,"crit":15,"cc":5},
+	"#shadowassassin" : {"def":95,"hp":210,"crit":25,"str":25},
       };
       boots = {
           "#none": {},
           "#lapis" : {"def":20},
-          "#unstabledragon": {"def":90,"hp":60,"crit":15,"cc":5}
+          "#unstabledragon": {"def":90,"hp":60,"crit":15,"cc":5},
+	"#shadowassassin" : {"def":55,"hp":125,"crit":25,"str":25},
       };
       fullset = {
           "#lapis": {"hp":60},
@@ -231,8 +236,9 @@ function filterFunction(itemName, inputName) {
     <input type="text" placeholder="Search.." id="weaponInput" onkeyup="filterFunction('weaponDropdown','weaponInput')">
     <a href="#none">None</a>
     <a href="#aote">Aspect of the End</a>
-    <a href="#atod">Aspect of the Dragons</a>
+    <a href="#aotd">Aspect of the Dragons</a>
     <a href="#fot">Flower of Truth</a>
+	<a href="#OrnateZombieSword">Ornate Zombie Sword</a>
   </div>
 </div>
 
@@ -248,6 +254,7 @@ function filterFunction(itemName, inputName) {
     <a href="#strongdragon">Strong Dragon</a>
     <a href="#unstabledragon">Unstable Dragon</a>
     <a href="#youngdragon">Young Dragon</a>
+	<a href="#shadowassassin"> Shadow Assassin</a>
   </div>
 </div>
 
@@ -261,11 +268,12 @@ function filterFunction(itemName, inputName) {
     <a href="#strongdragon">Strong Dragon</a>
     <a href="#unstabledragon">Unstable Dragon</a>
     <a href="#youngdragon">Young Dragon</a>
+	<a href="#shadowassassin"> Shadow Assassin</a>
   </div>
 </div>
 
 <div class="dropdown">
-  <button id="leggingDropdownButton" onclick="myFunction('legging')" class="dropbtn">Legging</button>
+  <button id="leggingDropdownButton" onclick="myFunction('legging')" class="dropbtn">Leggings</button>
   <div id="leggingDropdown" class="dropdown-content">
     <input type="text" placeholder="Search.." id="leggingInput" onkeyup="filterFunction('leggingDropdown','leggingInput')">
     <a href="#none">None</a>
@@ -273,11 +281,12 @@ function filterFunction(itemName, inputName) {
     <a href="#strongdragon">Strong Dragon</a>
     <a href="#unstabledragon">Unstable Dragon</a>
     <a href="#youngdragon">Young Dragon</a>
+	<a href="#shadowassassin"> Shadow Assassin</a>
   </div>
 </div>
 
 <div class="dropdown">
-  <button id="bootDropdownButton" onclick="myFunction('boot')" class="dropbtn">Boot</button>
+  <button id="bootDropdownButton" onclick="myFunction('boot')" class="dropbtn">Boots</button>
   <div id="bootDropdown" class="dropdown-content">
     <input type="text" placeholder="Search.." id="bootInput" onkeyup="filterFunction('bootDropdown','bootInput')">
     <a href="#none">None</a>
@@ -285,6 +294,7 @@ function filterFunction(itemName, inputName) {
     <a href="#strongdragon">Strong Dragon</a>
     <a href="#unstabledragon">Unstable Dragon</a>
     <a href="#youngdragon">Young Dragon</a>
+	<a href="#shadowassassin"> Shadow Assassin</a>
   </div>
 </div>
 
@@ -304,7 +314,7 @@ function filterFunction(itemName, inputName) {
 
 <div class="stat">Normal Damage: <span id="damage"></span></div>
 <div class="stat">Crit Chance: <span id="critchance"></span>%</div>
-<div class="stat">Crit Damage: <span id="critdamage"></span></div>
+<div class="stat">Critical Hit Damage: <span id="critdamage"></span></div>
 
      
 
