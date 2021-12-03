@@ -47,7 +47,7 @@
 <!-- End Data -->
 
     
-    <style>
+<style>
       DIV#sire DIV.ENTRY {
           border: 2px solid #99f;
       }
@@ -129,10 +129,29 @@
 .dropdown a:hover {background-color: #ddd;}
 
 .show {display: block;}
-    </style>
 
-    
 
+.item {
+  position: relative;
+  display: inline-block;
+  background: #aca;
+
+}
+
+.item H3 {
+    text-align: center;
+}
+
+.item .dropdown {
+    display: block;
+    width: 100%;
+}
+
+.item .dropdown .dropbtn {
+    width: 100%;
+}
+
+</style>
 
 <script>
 /* When the user clicks on the button,
@@ -165,10 +184,7 @@ function filterFunction(itemName, inputName) {
 
   function selectItem(itemName, name, href) {
       $('#'+itemName+'Dropdown').hide();
-      if(name == "None")
-          $('#'+itemName + 'DropdownButton').text("No " + itemName);
-      else
-          $('#'+itemName +'DropdownButton').text(name + " " + itemName);
+      $('#'+itemName +'DropdownButton').text(name);
       item[itemName] = href;
       calculateStats();
   }
@@ -258,9 +274,10 @@ function filterFunction(itemName, inputName) {
   </div>
 </div>
 
-
+<div class="item">
+  <h3>Chestplate</h3>
 <div class="dropdown">
-  <button id="chestplateDropdownButton" onclick="myFunction('chestplate')" class="dropbtn">Chestplate</button>
+  <button id="chestplateDropdownButton" onclick="myFunction('chestplate')" class="dropbtn">None</button>
   <div id="chestplateDropdown" class="dropdown-content">
     <input type="text" placeholder="Search.." id="chestInput" onkeyup="filterFunction('chestplateDropdown','chestplateInput')">
     <a href="#none">None</a>
@@ -270,6 +287,18 @@ function filterFunction(itemName, inputName) {
     <a href="#youngdragon">Young Dragon</a>
 	<a href="#shadowassassin"> Shadow Assassin</a>
   </div>
+</div>
+
+<div class="dropdown">
+<button id="chestplateReforgeDropdownButton" onClick="myFunction('chestplateReforge')" class="dropbtn">No Reforge</button>
+<div id="chestplateReforgeDropdown" class="dropdown-content">
+  <input type="text" placeholder="Seaerch.." id="chestplateReforgeInput" onkeyup="filterFunction('chestplateReforgeDropdown','chestplateReforgeInput')">
+  <a href="#none">No Reforge</a>
+  <a href="#clean">Clean</a>
+  <a href="#heavy">Heavy</a>
+</div>
+</div>
+
 </div>
 
 <div class="dropdown">
