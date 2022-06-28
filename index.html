@@ -232,7 +232,7 @@ function filterFunction(itemName, inputName) {
    */
   function applyReforge(item, reforgeCollection, reforge) {
       var ret = {};
-      var rf =  reforgeCollection[reforge];
+      var rf =  reforgeCollection[reforge] || {};
       var rarity = n(item.rarity);
 
       // alert("reforge is " + reforge);
