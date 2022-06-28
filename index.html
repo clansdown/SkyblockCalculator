@@ -236,6 +236,10 @@ function filterFunction(itemName, inputName) {
       if(cc > 100)
           cc = 100;
       $('#critchance').text(Math.floor(cc));
+
+      var int = n(weapon.int) + n(helmet.int) + n(chest.int) + n(leg.int) + n(bt.int) + n(fs.int);
+      $('#int').text(Math.floor(int));
+      $('#mana').text(Math.floor(int)+100);
   }
 </script>
     
@@ -345,7 +349,10 @@ function filterFunction(itemName, inputName) {
 <div class="stat">Crit Chance: <span id="critchance"></span>%</div>
 <div class="stat">Critical Hit Damage: <span id="critdamage"></span></div>
 
-     
+<br>
+
+<div class="stat">Intelligence: <span id="int"></span></div>
+<div class="mana">Mana: <span id="mana"></span></div>
 
     
   </body>
