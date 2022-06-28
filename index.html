@@ -5,44 +5,65 @@
 
     <script type="text/javascript" src="jquery-3.4.1.min.js"></script>
 
-<!-- The Data -->
+    <!-- The Data -->
+    <!-- note: to enter the rarity, common = 0, uncommon = 1, rare = 2, epic = 3, legendary = 4, mythic = 5 -->
 <script>
-  item={"weapon": "#none", "helmet" : "#none", "chestplate" : "#none", "legging" : "#none", "boot" : "#none"}
+  item={"weapon": "#none",
+        "helmet" : "#none",
+        "helmetReforge" : "#none",
+        "chestplate" : "#none",
+        "chestplateReforge" : "#none",
+        "legging" : "#none",
+        "leggingReforge" : "#none",
+        "boot" : "#none",
+        "bootReforge": "#none",
+        "weaponReforge" : "#none"}
   weapons = {
       "#none": {},
-      "#aote": {"dmg": 100, "str": 100},
-	"#OrnateZombieSword": {"dmg": 110, "str": 60, "int": 50},
-      "#aotd": {"dmg": 225, "str": 100},
-      "#fot": {"dmg": 160, str: 300}
+      "#aote": {"dmg": 100, "str": 100, "rarity":2},
+	  "#OrnateZombieSword": {"dmg": 110, "str": 60, "int": 50, "rarity":3},
+      "#aotd": {"dmg": 225, "str": 100, "rarity":4},
+      "#fot": {"dmg": 160, "str": 300, "rarity":4},
+      "#shadowfury": {"dmg": 300, "str" : 125, "spd" : 30, "rarity":4}
   };
-      helmets = {
-          "#none": {"def":0,"hp":0,"crit":0,"cc":0,"int":0},
-          "#lapis" : {"def":25},
-          "#unstabledragon": {"def":110,"hp":70,"crit":15,"cc":5,"int":25},
-	"#shadowassassin" : {"def":70, "hp":160, "crit":25, "str":25},
-      };
-      chestplates = {
-          "#none": {},
-          "#lapis" : {"def":40},
-          "#unstabledragon": {"def":160,"hp":120,"crit":15,"cc":5},
-	"#shadowassassin" : {"def":110, "hp":240, "crit":25, "str":25},
-      };
-      leggings = {
-          "#none": {},
-          "#lapis" : {"def":35},
-          "#unstabledragon": {"def":140,"hp":100,"crit":15,"cc":5},
-	"#shadowassassin" : {"def":95,"hp":210,"crit":25,"str":25},
-      };
-      boots = {
-          "#none": {},
-          "#lapis" : {"def":20},
-          "#unstabledragon": {"def":90,"hp":60,"crit":15,"cc":5},
-	"#shadowassassin" : {"def":55,"hp":125,"crit":25,"str":25},
-      };
-      fullset = {
-          "#lapis": {"hp":60},
-      };
-      
+  helmets = {
+      "#none": {"def":0,"hp":0,"crit":0,"cc":0,"int":0},
+      "#lapis" : {"def":25, "rarity" : 1},
+      "#unstabledragon": {"def":110,"hp":70,"crit":15,"cc":5,"int":25, "rarity" : 4},
+	  "#shadowassassin" : {"def":70, "hp":160, "crit":25, "str":25, "rarity":3},
+  };
+  chestplates = {
+      "#none": {},
+      "#lapis" : {"def":40, "rarity":1},
+      "#unstabledragon": {"def":160,"hp":120,"crit":15,"cc":5, "rarity" : 4},
+	  "#shadowassassin" : {"def":110, "hp":240, "crit":25, "str":25, "rarity":3},
+  };
+  leggings = {
+      "#none": {},
+      "#lapis" : {"def":35, "rarity":1 },
+      "#unstabledragon": {"def":140,"hp":100,"crit":15,"cc":5, "rarity" : 4},
+	  "#shadowassassin" : {"def":95,"hp":210,"crit":25,"str":25, "rarity":3},
+  };
+  boots = {
+      "#none": {},
+      "#lapis" : {"def":20, "rarity":1 },
+      "#unstabledragon": {"def":90,"hp":60,"crit":15,"cc":5, "rarity" : 4},
+	  "#shadowassassin" : {"def":55,"hp":125,"crit":25,"str":25, "rarity":3},
+  };
+  fullset = {
+      "#lapis": {"hp":60},
+  };
+  armor_reforges = {
+      "#none" : {crit: [0,0,0,0,0], "hp":[0,0,0,0,0], "def":[0,0,0,0,0], "cc":[0,0,0,0,0], "str":[0,0,0,0,0]},
+      "#heavy" : {},
+      "#clean" : { "hp" : [5, 7, 10, 15, 20, 25], "def" : [5, 7, 10, 15, 20, 25], "cc" : [2, 4, 6, 8, 10, 12] },
+      "#fierce" : { "str" : [2, 4, 6, 8, 10, 12], "cc" : [2, 3, 4, 5, 6, 8], "crit": [4, 7, 10, 14, 18, 24] },
+  };
+  weapon_reforges = {
+      "#none" : {"crit":[0,0,0,0,0],"cc":[0,0,0,0,0],"str":[0,0,0,0,0],"as":[0,0,0,0,0]},
+      "#sharp" : { "cc" : [10, 12, 14, 17, 20, 25], "crit": [20, 30, 40, 55, 75, 90], "str":[0,0,0,0,0] },
+      "#epic" : { "str": [15, 20, 25, 32, 40], "crit" : [10, 15, 20, 27, 35, 45], "as" : [1, 2, 4, 7, 10, 15] },
+  };
 </script>
 <!-- End Data -->
 
@@ -192,18 +213,26 @@ function filterFunction(itemName, inputName) {
   function n(x) {
       if(isNaN(x))
           return 0;
+      if(!Number.isFinite(x))
+         return 0;
       return x;
   }
+
   
   function calculateStats() {
       // TODO: get this from the user
       var combat_level = 1;
       
       var weapon = weapons[item["weapon"]] || {};
+      var weapon_reforge = weapon_reforges[item["weaponReforge"]] || weapon_reforges["#none"] || {};
       var helmet = helmets[item["helmet"]] || {};
+      var helmet_reforge = armor_reforges[item["helmetReforge"]] || armor_reforges["#none"] || {};
       var chest = chestplates[item["chestplate"]] || {};
+      var chest_reforge = armor_reforges[item["chestplateReforge"]] || {};
       var leg = leggings[item["legging"]] || {};
+      var leg_reforge = armor_reforges[item["leggingReforge"]] || {};
       var bt = boots[item["boot"]] || {};
+      var bt_reforge = armor_reforges[item["bootReforge"]] || {};
       var fs;
       if(item["helmet"] == item["chestplate"] && item["chestplate"] == item["legging"] && item["legging"] == item["boot"]) {
           fs = fullset[item["helmet"]];
@@ -212,6 +241,7 @@ function filterFunction(itemName, inputName) {
       } else {
           fs = {"hp": 0, "def": 0, "crit":0, "cc":0};
       }
+      
           
 
       var hp = 100 + n(helmet.hp) + n(chest.hp) + n(leg.hp) + n(bt.hp) + n(fs.hp);
@@ -223,8 +253,20 @@ function filterFunction(itemName, inputName) {
 
       /* Calculate Damage */
       var dmg = n(weapon.dmg);
-      var str = n(weapon.str) + n(helmet.str) + n(chest.str) + n(leg.str) + n(bt.str) + n(fs.str);
-      var crit = 50 + n(helmet.crit) + n(chest.crit) + n(leg.crit) + n(bt.crit) + n(fs.crit);
+      var str = n(weapon.str) + n(weapon_reforge.str[n(weapon.rarity)])
+          + n(helmet.str)
+          + n(chest.str)
+          + n(leg.str)
+          + n(bt.str)
+          + n(fs.str);
+      var crit = 50
+          + n(weapon.crit) + n(weapon_reforge.crit[n(weapon.rarity)])
+          + n(helmet.crit) + n(helmet_reforge.crit[n(helmet.rarity)])
+          + n(chest.crit) + n(chest_reforge.crit[n(chest.rarity)])
+          + n(leg.crit) + n(leg_reforge.crit[n(leg.rarity)])
+          + n(bt.crit) + n(bt_reforge.crit[n(bt.rarity)])
+          + n(fs.crit);
+      
       var init_damage = (5+dmg)*(1 + (str/100));
       var dmg_mult = 1 + (combat_level*.04);
       var hit_damage = init_damage*dmg_mult;
@@ -232,11 +274,18 @@ function filterFunction(itemName, inputName) {
       $('#damage').text(Math.floor(hit_damage));
       $('#critdamage').text(Math.floor(crit_damage));
       
-      var cc = 30 + 0.5*combat_level + n(helmet.cc) + n(chest.cc) + n(leg.cc) + n(bt.cc) + n(fs.cc);
+      var cc = 30 + 0.5*combat_level
+          + n(weapon.cc) + n(weapon_reforge.cc)
+          + n(helmet.cc) + n(helmet_reforge.cc)
+          + n(chest.cc) + n(chest_reforge.cc) 
+          + n(leg.cc) + n(leg_reforge.cc)
+          + n(bt.cc) + n(bt_reforge.cc)
+          + n(fs.cc);
       if(cc > 100)
           cc = 100;
       $('#critchance').text(Math.floor(cc));
 
+      
       var int = n(weapon.int) + n(helmet.int) + n(chest.int) + n(leg.int) + n(bt.int) + n(fs.int);
       $('#int').text(Math.floor(int));
       $('#mana').text(Math.floor(int)+100);
@@ -259,6 +308,7 @@ function filterFunction(itemName, inputName) {
     <a href="#aotd">Aspect of the Dragons</a>
     <a href="#fot">Flower of Truth</a>
 	<a href="#OrnateZombieSword">Ornate Zombie Sword</a>
+    <a href="#shadowfury">Shadow Fury</a>
   </div>
 </div>
 
@@ -296,8 +346,9 @@ function filterFunction(itemName, inputName) {
 <div class="dropdown">
 <button id="chestplateReforgeDropdownButton" onClick="myFunction('chestplateReforge')" class="dropbtn">No Reforge</button>
 <div id="chestplateReforgeDropdown" class="dropdown-content">
-  <input type="text" placeholder="Seaerch.." id="chestplateReforgeInput" onkeyup="filterFunction('chestplateReforgeDropdown','chestplateReforgeInput')">
+  <input type="text" placeholder="Search.." id="chestplateReforgeInput" onkeyup="filterFunction('chestplateReforgeDropdown','chestplateReforgeInput')">
   <a href="#none">No Reforge</a>
+  <a href="#fierce">Fierce</a>
   <a href="#clean">Clean</a>
   <a href="#heavy">Heavy</a>
 </div>
@@ -305,6 +356,8 @@ function filterFunction(itemName, inputName) {
 
 </div>
 
+<div class="item">
+  <h3>Leggings</h3>
 <div class="dropdown">
   <button id="leggingDropdownButton" onclick="myFunction('legging')" class="dropbtn">Leggings</button>
   <div id="leggingDropdown" class="dropdown-content">
@@ -316,6 +369,7 @@ function filterFunction(itemName, inputName) {
     <a href="#youngdragon">Young Dragon</a>
 	<a href="#shadowassassin"> Shadow Assassin</a>
   </div>
+</div>
 </div>
 
 <div class="dropdown">
