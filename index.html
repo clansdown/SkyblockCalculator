@@ -7,7 +7,15 @@
 
     <!-- The Data -->
     <!-- note: to enter the rarity, common = 0, uncommon = 1, rare = 2, epic = 3, legendary = 4, mythic = 5 -->
-<script>
+    <script>
+      combat_level = 0;
+      foraging_level = 0;
+      mining_level = 0;
+      farming_level = 0;
+      fishing_level = 0;
+      enchanting_level = 0;
+      alchemy_level = 0;
+      catacombs_level = 0;
   item={"weapon": "#none",
         "helmet" : "#none",
         "helmetReforge" : "#none",
@@ -17,52 +25,124 @@
         "leggingReforge" : "#none",
         "boot" : "#none",
         "bootReforge": "#none",
-        "weaponReforge" : "#none"}
+        "weaponReforge" : "#none"};
   weapons = {
       "#none": {},
       "#aote": {"dmg": 100, "str": 100, "rarity":2},
 	  "#OrnateZombieSword": {"dmg": 110, "str": 60, "int": 50, "rarity":3},
       "#aotd": {"dmg": 225, "str": 100, "rarity":4},
       "#fot": {"dmg": 160, "str": 300, "rarity":4},
-      "#shadowfury": {"dmg": 300, "str" : 125, "spd" : 30, "rarity":4}
+      "#shadowfury": {"dmg": 300, "str" : 125, "spd" : 30, "rarity":4},
+      "#lividdagger": {},
+      "#giantsword" : {},
+      "#darkclaymore" : {},
   };
   helmets = {
       "#none": {"def":0,"hp":0,"crit":0,"cc":0,"int":0},
       "#lapis" : {"def":25, "rarity" : 1},
       "#unstabledragon": {"def":110,"hp":70,"crit":15,"cc":5,"int":25, "rarity" : 4},
 	  "#shadowassassin" : {"def":70, "hp":160, "crit":25, "str":25, "rarity":3},
+      "#reapermask" : {},
+      "#superiordragon" : {},
+      "#perfectier12" : {},
+      "#goldor" : {},
+      "#necron" : {},
   };
   chestplates = {
       "#none": {},
       "#lapis" : {"def":40, "rarity":1},
       "#unstabledragon": {"def":160,"hp":120,"crit":15,"cc":5, "rarity" : 4},
 	  "#shadowassassin" : {"def":110, "hp":240, "crit":25, "str":25, "rarity":3},
+      "#superiordragon" : {},
+      "#perfectier12" : {},
+      "#goldor" : {},
+      "#necron" : {},
   };
   leggings = {
       "#none": {},
       "#lapis" : {"def":35, "rarity":1 },
       "#unstabledragon": {"def":140,"hp":100,"crit":15,"cc":5, "rarity" : 4},
 	  "#shadowassassin" : {"def":95,"hp":210,"crit":25,"str":25, "rarity":3},
+      "#superiordragon" : {},
+      "#perfectier12" : {},
+      "#goldor" : {},
+      "#necron" : {},
   };
   boots = {
       "#none": {},
       "#lapis" : {"def":20, "rarity":1 },
       "#unstabledragon": {"def":90,"hp":60,"crit":15,"cc":5, "rarity" : 4},
 	  "#shadowassassin" : {"def":55,"hp":125,"crit":25,"str":25, "rarity":3},
+      "#superiordragon" : {},
+      "#perfectier12" : {},
+      "#goldor" : {},
+      "#necron" : {},
   };
   fullset = {
       "#lapis": {"hp":60},
   };
   armor_reforges = {
       "#none" : {crit: [0,0,0,0,0], "hp":[0,0,0,0,0], "def":[0,0,0,0,0], "cc":[0,0,0,0,0], "str":[0,0,0,0,0]},
-      "#heavy" : {},
       "#clean" : { "hp" : [5, 7, 10, 15, 20, 25], "def" : [5, 7, 10, 15, 20, 25], "cc" : [2, 4, 6, 8, 10, 12] },
       "#fierce" : { "str" : [2, 4, 6, 8, 10, 12], "cc" : [2, 3, 4, 5, 6, 8], "crit": [4, 7, 10, 14, 18, 24] },
+      "#heavy" : {},
+      "#light": {},
+      "#mythic": {},
+      "#pure": {},
+      "#smart": {},
+      "#titanic": {},
+      "#wise": {},
+      "#reinforced" : {"def": [25, 35, 50, 65, 80, 110]},
+      "#perfect" : {"def": [25, 35, 50, 65, 80, 110]},
+      "#nectrotic": {},
+      "#ancient": {},
+      "#spiked": {},
+      "#renowned": {},
+      "#cubic": {},
+      "#hyper": {},
+      "#loving": {},
+      "#ridiculous": {},
+      "#empowered": {},
+      "#giant": {},
+      "#submerged": {},
+      "#jaded": {},
+      
   };
   weapon_reforges = {
       "#none" : {"crit":[0,0,0,0,0],"cc":[0,0,0,0,0],"str":[0,0,0,0,0],"as":[0,0,0,0,0]},
-      "#sharp" : { "cc" : [10, 12, 14, 17, 20, 25], "crit": [20, 30, 40, 55, 75, 90]},
+      "#odd": {},
+      "#fast": {},
+      "#fair": {},
       "#epic" : { "str": [15, 20, 25, 32, 40], "crit" : [10, 15, 20, 27, 35, 45], "as" : [1, 2, 4, 7, 10, 15] },
+      "#sharp" : { "cc" : [10, 12, 14, 17, 20, 25], "crit": [20, 30, 40, 55, 75, 90]},
+      "#heroic": {},
+      "#spicy": {},
+      "#legendary": {},
+      "#dirty": {},
+      "#fabled": {},
+      "#suspicious": {},
+      "#gilded": {},
+      "#warped": {},
+      "#withered": {},
+      "#bulky": {},
+      "#salty": {},
+      "#treacherous": {},
+      "#stiff": {},
+      "#lucky": {},
+  };
+  bow_reforges = {
+      "#deadly": {},
+      "#fine": {},
+      "#grand": {},
+      "#hasty": {},
+      "#neat": {},
+      "#rapid": {},
+      "#unreal": {},
+      "#awkward": {},
+      "#rich": {},
+      "#precise": {},
+      "#spiritual": {},
+      "#headstrong": {},
   };
 </script>
 <!-- End Data -->
@@ -175,6 +255,45 @@
 </style>
 
 <script>
+  function el(x) {
+      return document.getElementById(x);
+  }
+  
+  function init() {
+      var splitted = document.cookie.split(';');
+      var cookies = {};
+      for(let i = 0; i < splitted.length; i++) {
+          let parts = splitted[i].split("=", 2);
+          cookies[parts[0].trim()] = parts[1];
+      }
+
+      console.log(document.cookie);
+      
+      el("combat").valueAsNumber = combat_level = n(cookies.combat);
+      el("foraging").valueAsNumber = foraging_level = n(cookies.foraging);
+      el("mining").valueAsNumber = mining_level = n(cookies.mining);
+      el("farming").valueAsNumber = farming_level = n(cookies.farming);
+      el("fishing").valueAsNumber = fishing_level = n(cookies.fishing);
+      el("enchanting").valueAsNumber = enchanting_level = n(cookies.enchanting);
+      el("alchemy").valueAsNumber = alchemy_level = n(cookies.alchemy);
+      el("catacombs").valueAsNumber = catacombs_level = n(cookies.catacombs);
+      
+      calculateStats();
+  }
+  
+  function save() {
+      document.cookie = 'combat=' + combat_level;
+      document.cookie = 'foraging=' + foraging_level;
+      document.cookie = 'mining=' + mining_level;
+      document.cookie = 'farming=' + farming_level;
+      document.cookie = 'fishing=' + fishing_level;
+      document.cookie = 'enchanting=' + enchanting_level;
+      document.cookie = 'alchemy=' + alchemy_level;
+      document.cookie = 'catacombs=' + catacombs_level;
+      alert("Player Data Saved");
+  }
+
+  
 /* When the user clicks on the button,
 toggle between hiding and showing the dropdown content */
 function myFunction(itemName) {
@@ -214,7 +333,7 @@ function filterFunction(itemName, inputName) {
       if(isNaN(x))
           return 0;
       if(!Number.isFinite(x))
-         return 0;
+          return parseInt(x);
       return x;
   }
 
@@ -242,7 +361,7 @@ function filterFunction(itemName, inputName) {
       ret.crit = a(rf.crit, rarity);
       ret.int = a(rf.int, rarity);
       ret.hp = a(rf.hp, rarity);
-      ret.def = a(rf.hp, rarity);
+      ret.def = a(rf.def, rarity);
       ret.spd = a(rf.spd, rarity);
       
       item.reforge = ret;
@@ -250,7 +369,7 @@ function filterFunction(itemName, inputName) {
   
   function calculateStats() {
       // TODO: get this from the user
-      var combat_level = 1;
+      // var combat_level = 1;
 
      
       var weapon = weapons[item["weapon"]] || {};
@@ -272,12 +391,31 @@ function filterFunction(itemName, inputName) {
           fs = {"hp": 0, "def": 0, "crit":0, "cc":0};
       }
       
-          
 
-      var hp = 100 + n(helmet.hp) + helmet.reforge.hp + n(chest.hp) + chest.reforge.hp + n(leg.hp) + leg.reforge.hp + n(bt.hp) + bt.reforge.hp + n(fs.hp);
+      var hp = 100 + n(helmet.hp) + helmet.reforge.hp
+          + n(chest.hp) + chest.reforge.hp
+          + n(leg.hp) + leg.reforge.hp
+          + n(bt.hp) + bt.reforge.hp
+          + n(fs.hp)
+          + Math.min(14, 2*farming_level)
+          + Math.max(0, 3*Math.min(19, farming_level-14))
+          + Math.max(0, 4*Math.min(25, farming_level-19))
+          + Math.max(0, 5*(farming_level-25))
+          + Math.min(14, 2*fishing_level)
+          + Math.max(0, 3*Math.min(19, fishing_level-14))
+          + Math.max(0, 4*Math.min(25, fishing_level-19))
+          + Math.max(0, 5*(fishing_level-25));
       $('#health').text(hp);
-      var def = n(helmet.def) + helmet.reforge.def + n(chest.def) + chest.reforge.def + n(leg.def) + leg.reforge.def + n(bt.def) + bt.reforge.def + n(fs.def);
+
+      var def = n(helmet.def) + helmet.reforge.def
+          + n(chest.def) + chest.reforge.def
+          + n(leg.def) + leg.reforge.def
+          + n(bt.def) + bt.reforge.def
+          + n(fs.def)
+          + (mining_level < 15 ? mining_level : 14 + 2*(mining_level-14));
       $('#defense').text(def);
+
+     
       var ehp = hp * (1 + (def/100));
       $('#ehp').text(Math.floor(ehp));
 
@@ -288,7 +426,8 @@ function filterFunction(itemName, inputName) {
           + n(chest.str) + chest.reforge.str
           + n(leg.str) + leg.reforge.str
           + n(bt.str) + bt.reforge.str
-          + n(fs.str);
+          + n(fs.str)
+          + (foraging_level < 15 ? foraging_level : 14 + 2*(foraging_level-14));
       var crit = 50
           + n(weapon.crit) + weapon.reforge.crit
           + n(helmet.crit) + helmet.reforge.crit
@@ -320,13 +459,28 @@ function filterFunction(itemName, inputName) {
       $('#int').text(Math.floor(int));
       $('#mana').text(Math.floor(int)+100);
   }
+
+  
 </script>
     
   </head>
-  <body>
+  <body onLoad="init();">
 
     <h1>Skyblock Weapons & Armor Calculator</h1>
 
+    <h2>Player</h2>
+
+    <form id="player">
+      Combat: <input type="number" name="combat" id="combat" min="1", max="50" step="1" value="1" onChange="combat_level = this.valueAsNumber; calculateStats();" /><br>
+      Foraging: <input type="number" name="foraging" id="foraging" min="1", max="50" step="1" value="1" onChange="foraging_level = this.valueAsNumber; calculateStats();" /><br>
+      Mining: <input type="number" name="mining" id="mining" min="1", max="50" step="1" value="1" onChange="mining_level = this.valueAsNumber; calculateStats();" /><br>
+      Farming: <input type="number" name="farming" id="farming" min="1", max="50" step="1" value="1" onChange="farming_level = this.valueAsNumber; calculateStats();" /><br>
+      Fishing: <input type="number" name="fishing" id="fishing" min="1", max="50" step="1" value="1" onChange="fishing_level = this.valueAsNumber; calculateStats();" /><br>
+      Enchanting: <input type="number" name="enchanting" id="enchanting" min="1", max="50" step="1" value="1" onChange="enchanting_level = this.valueAsNumber; calculateStats();" /><br>
+      Alchemy: <input type="number" name="alchemy" id="alchemy" min="1", max="50" step="1" value="1" onChange="alchemy_level = this.valueAsNumber; calculateStats();" /><br>
+      Catacombs: <input type="number" name="catacombs" id="catacombs" min="1", max="50" step="1" value="1" onChange="catacombs_level = this.valueAsNumber; calculateStats();" /><br>
+    </form>
+    <button onClick="save(); return false;">Save</button>
 <h2>Weapon</h2>
 
 <div class="dropdown">
@@ -380,6 +534,8 @@ function filterFunction(itemName, inputName) {
       <a href="#fierce">Fierce</a>
       <a href="#clean">Clean</a>
       <a href="#heavy">Heavy</a>
+      <a href="#reinforced">Reinforced</a>
+      <a href="#perfect">Perfect</a>
     </div>
   </div>
 
@@ -408,6 +564,8 @@ function filterFunction(itemName, inputName) {
       <a href="#fierce">Fierce</a>
       <a href="#clean">Clean</a>
       <a href="#heavy">Heavy</a>
+      <a href="#reinforced">Reinforced</a>
+      <a href="#perfect">Perfect</a>
     </div>
   </div>
 
@@ -436,6 +594,8 @@ function filterFunction(itemName, inputName) {
       <a href="#fierce">Fierce</a>
       <a href="#clean">Clean</a>
       <a href="#heavy">Heavy</a>
+      <a href="#reinforced">Reinforced</a>
+      <a href="#perfect">Perfect</a>
     </div>
   </div>
 </div>
@@ -463,6 +623,8 @@ function filterFunction(itemName, inputName) {
       <a href="#fierce">Fierce</a>
       <a href="#clean">Clean</a>
       <a href="#heavy">Heavy</a>
+      <a href="#reinforced">Reinforced</a>
+      <a href="#perfect">Perfect</a>
     </div>
   </div>
 </div>
