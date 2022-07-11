@@ -28,6 +28,8 @@
         "weaponReforge" : "#none"};
   weapons = {
       "#none": {},
+      "#undead" : { "dmg" : 30},
+      "#golem" : { "dmg" : 80, "str" : 125, "def" : 25},
       "#aote": {"dmg": 100, "str": 100, "rarity":2},
 	  "#OrnateZombieSword": {"dmg": 110, "str": 60, "int": 50, "rarity":3},
       "#aotd": {"dmg": 225, "str": 100, "rarity":4},
@@ -407,7 +409,8 @@ function filterFunction(itemName, inputName) {
           + Math.max(0, 5*(fishing_level-25));
       $('#health').text(hp);
 
-      var def = n(helmet.def) + helmet.reforge.def
+      var def = n(weapon.def)
+          + n(helmet.def) + helmet.reforge.def
           + n(chest.def) + chest.reforge.def
           + n(leg.def) + leg.reforge.def
           + n(bt.def) + bt.reforge.def
@@ -481,8 +484,9 @@ function filterFunction(itemName, inputName) {
       Catacombs: <input type="number" name="catacombs" id="catacombs" min="1", max="50" step="1" value="1" onChange="catacombs_level = this.valueAsNumber; calculateStats();" /><br>
     </form>
     <button onClick="save(); return false;">Save</button>
-<h2>Weapon</h2>
 
+    
+<h2>Weapon</h2>
 <div class="dropdown">
   <button id="weaponReforgeDropdownButton" onClick="myFunction('weaponReforge')" class="dropbtn">No Reforge</button>
   <div id="weaponReforgeDropdown" class="dropdown-content">
@@ -499,6 +503,8 @@ function filterFunction(itemName, inputName) {
   <div id="weaponDropdown" class="dropdown-content">
     <input type="text" placeholder="Search.." id="weaponInput" onkeyup="filterFunction('weaponDropdown','weaponInput')">
     <a href="#none">None</a>
+    <a href="#undead">Undead Sword</a>
+    <A href="#golem">Golem Sword</a>
     <a href="#aote">Aspect of the End</a>
     <a href="#aotd">Aspect of the Dragons</a>
     <a href="#fot">Flower of Truth</a>
